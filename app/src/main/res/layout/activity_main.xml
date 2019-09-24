@@ -210,7 +210,7 @@
                 android:id="@+id/button20"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:onClick="pressButton"
+                android:onClick="pressColButton"
                 android:text="=" />
         </TableRow>
 

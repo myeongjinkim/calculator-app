@@ -21,54 +21,79 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        number = (TextView) findViewById(R.id.textView1) ;
-        progress = (TextView) findViewById(R.id.textView2) ;
+        number = (TextView) findViewById(R.id.textView1);
+        progress = (TextView) findViewById(R.id.textView2);
     }
-    public void pressNumButton(View view)
-    {
+
+    public void pressNumButton(View view) {
         String s = (String) ((Button) view).getText();
-        if(this.number.getText().equals("0"))
-        {
+        if (this.number.getText().equals("0")) {
             this.number.setText(s);
-        }else {
+        } else {
             this.number.setText(this.number.getText() + s);
         }
     }
-    public void pressOperButton(View view)
-    {
+
+    public void pressOperButton(View view) {
         String s = (String) ((Button) view).getText();
-        this.progress.setText(this.number.getText() +" "+ s);
+        if(this.progress.getText().equals("")==false)
+        {
+            String sNum2 = (String) this.number.getText();
+            double num2 = Double.parseDouble(sNum2);
+            String text = (String) this.progress.getText();
+            String[] a = text.split(" ");
+            double num = Double.parseDouble(a[0]);
+            System.out.println(num + a[1] + num2);
+            operate(a[1],num,num2);
+
+
+        }
+        this.progress.setText(this.number.getText() + " " + s);
         this.number.setText("0");
     }
-    public void pressPointButton(View view)
-    {
-        String s = (String) ((Button) view).getText();
-        this.number.setText(this.number.getText() + s);
+
+    public void pressPointButton(View view) {
+        String num = (String)this.number.getText();
+        boolean check = true;
+        for(int i=0;i<num.length() ;i++)
+        {
+            if(num.charAt(i)=='.')
+            {
+                check=false;
+            }
+        }
+        if(check)
+        {
+            String s = (String) ((Button) view).getText();
+            this.number.setText(this.number.getText() + s);
+        }
+
     }
+
     public void pressSignButton(View view) {
         String s = (String) ((Button) view).getText();
-        String num = (String)this.number.getText();
-        if(num.charAt(0)=='0'){
+        String num = (String) this.number.getText();
+        if (num.charAt(0) == '0') {
 
-        }else if(num.charAt(0)=='-')
-        {
-            String paste= "";
-            for(int i=0 ; i < (num.length())-1 ;i++) {
-                paste+=num.charAt(i+1);
+        } else if (num.charAt(0) == '-') {
+            String paste = "";
+            for (int i = 0; i < (num.length()) - 1; i++) {
+                paste += num.charAt(i + 1);
             }
             this.number.setText(paste);
-        }else{
-            this.number.setText("-"+num);
+        } else {
+            this.number.setText("-" + num);
         }
     }
+
     public void pressRemoveButton(View view) {
         String s = (String) ((Button) view).getText();
-        if(s.equals("C")) {
+        if (s.equals("C")) {
             this.number.setText("0");
             this.progress.setText("");
-        }else if(s.equals("CE")) {
+        } else if (s.equals("CE")) {
             this.number.setText("0");
-        }else if(s.equals("지우기")){
+        } else if (s.equals("지우기")) {
             String paste = "";
             String num = (String) this.number.getText();
             for (int i = 0; i < (num.length()) - 1; i++) {
@@ -77,8 +102,50 @@ public class MainActivity extends AppCompatActivity {
             this.number.setText(paste);
         }
     }
-    //pressRemoveButton
 
+    public void pressColButton(View view) {
 
+        String sNum2 = (String) this.number.getText();
+        String text = (String) this.progress.getText();
+        if(text.equals("")==false)
+        {
+            double num2 = Double.parseDouble(sNum2);
+            String[] a = text.split(" ");
+            double num = Double.parseDouble(a[0]);
+            System.out.println(num + a[1] + num2);
+            operate(a[1],num,num2);
+        }
+    }
+
+    public void operate(String col, double num, double num2)
+    {
+        String result="";
+        double chkPoint;
+        if (col.equals("+")) {
+            result = checkDouble(num + num2);
+        } else if (col.equals("-")) {
+            result = checkDouble(num - num2);
+        } else if (col.equals("*")) {
+            result = checkDouble(num * num2);
+        } else if (col.equals("/")) {
+            result = checkDouble(num / num2);
+        }
+        this.number.setText(result);
+        this.progress.setText("");
+    }
+    public String checkDouble(double chkPoint)
+    {
+        String result;
+        int convInt;
+        convInt = (int)chkPoint;
+        if(convInt==chkPoint)
+        {
+            result = Integer.toString(convInt);
+        }else
+        {
+            result = Double.toString(chkPoint);
+        }
+        return  result;
+    }
 
 }
