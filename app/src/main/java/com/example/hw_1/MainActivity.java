@@ -8,20 +8,20 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private TextView number;
+    private TextView progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView textView1 = (TextView) findViewById(R.id.textView1) ;
-        textView1.setText("Text1 is changed.") ;
-        TextView textView2 = (TextView) findViewById(R.id.textView2) ;
-        textView2.setText("Text2 is changed.") ;
-
+        number = (TextView) findViewById(R.id.textView1) ;
+        progress = (TextView) findViewById(R.id.textView2) ;
     }
     public void pressButton(View view)
     {
         String s = (String) ((Button) view).getText();
         System.out.println("Press : " + s);
-
+        this.number.setText(this.number.getText() + s);
     }
 }
