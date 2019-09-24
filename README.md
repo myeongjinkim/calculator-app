@@ -16,6 +16,12 @@ Used Memory : under 12.2Mb
 
 Used CPU : under 15%
 
+Development
+
+Development language : JAVA
+
+Layout : TableLayout
+
 Function
 
 Can add, subtract, multiply, divide.
