@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Queue;
@@ -39,11 +40,10 @@ public class MainActivity extends AppCompatActivity {
         if(this.progress.getText().equals("")==false)
         {
             String sNum2 = (String) this.number.getText();
-            double num2 = Double.parseDouble(sNum2);
+            BigDecimal num2 = new BigDecimal(sNum2);
             String text = (String) this.progress.getText();
             String[] a = text.split(" ");
-            double num = Double.parseDouble(a[0]);
-            System.out.println(num + a[1] + num2);
+            BigDecimal num = new BigDecimal(a[0]);
             operate(a[1],num,num2);
 
 
@@ -109,41 +109,46 @@ public class MainActivity extends AppCompatActivity {
         String text = (String) this.progress.getText();
         if(text.equals("")==false)
         {
-            double num2 = Double.parseDouble(sNum2);
+            BigDecimal num2 = new BigDecimal(sNum2);
             String[] a = text.split(" ");
-            double num = Double.parseDouble(a[0]);
-            System.out.println(num + a[1] + num2);
+            BigDecimal num = new BigDecimal(a[0]);
             operate(a[1],num,num2);
         }
     }
 
-    public void operate(String col, double num, double num2)
+    public void operate(String col, BigDecimal num, BigDecimal num2)
     {
         String result="";
-        double chkPoint;
+        BigDecimal chkPoint;
         if (col.equals("+")) {
-            result = checkDouble(num + num2);
+            result = checkBigDecimal(num.add(num2));
         } else if (col.equals("-")) {
-            result = checkDouble(num - num2);
+            result = checkBigDecimal(num.subtract(num2));
+            System.out.println(num);
+            System.out.println(num2);
+            System.out.println(num.subtract(num2));
+            System.out.println(result);
         } else if (col.equals("*")) {
-            result = checkDouble(num * num2);
+            result = checkBigDecimal(num.multiply(num2));
         } else if (col.equals("/")) {
-            result = checkDouble(num / num2);
+            result = checkBigDecimal(num.divide(num2));
         }
         this.number.setText(result);
         this.progress.setText("");
     }
-    public String checkDouble(double chkPoint)
+    public String checkBigDecimal(BigDecimal chkPoint)
     {
         String result;
         int convInt;
-        convInt = (int)chkPoint;
-        if(convInt==chkPoint)
+        double convDouble;
+        convInt = chkPoint.intValue();
+        convDouble = chkPoint.doubleValue();
+        if(convInt==convDouble)
         {
             result = Integer.toString(convInt);
         }else
         {
-            result = Double.toString(chkPoint);
+            result = Double.toString(convDouble);
         }
         return  result;
     }
