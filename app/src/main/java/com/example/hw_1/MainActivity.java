@@ -1,5 +1,4 @@
 package com.example.hw_1;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,11 +12,9 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Queue;
-
 public class MainActivity extends AppCompatActivity {
     private TextView number;
     private TextView progress;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         number = (TextView) findViewById(R.id.textView1);
         progress = (TextView) findViewById(R.id.textView2);
     }
-
     public void pressNumButton(View view) {
         String s = (String) ((Button) view).getText();
         if (this.number.getText().equals("0")) {
@@ -34,47 +30,36 @@ public class MainActivity extends AppCompatActivity {
             this.number.setText(this.number.getText() + s);
         }
     }
-
     public void pressOperButton(View view) {
         String s = (String) ((Button) view).getText();
-        if(this.progress.getText().equals("")==false)
-        {
+        if(this.progress.getText().equals("")==false) {
             String sNum2 = (String) this.number.getText();
             BigDecimal num2 = new BigDecimal(sNum2);
             String text = (String) this.progress.getText();
             String[] a = text.split(" ");
             BigDecimal num = new BigDecimal(a[0]);
             operate(a[1],num,num2);
-
-
         }
         this.progress.setText(this.number.getText() + " " + s);
         this.number.setText("0");
     }
-
     public void pressPointButton(View view) {
         String num = (String)this.number.getText();
         boolean check = true;
-        for(int i=0;i<num.length() ;i++)
-        {
-            if(num.charAt(i)=='.')
-            {
+        for(int i=0;i<num.length() ;i++) {
+            if(num.charAt(i)=='.') {
                 check=false;
             }
         }
-        if(check)
-        {
+        if(check) {
             String s = (String) ((Button) view).getText();
             this.number.setText(this.number.getText() + s);
         }
-
     }
-
     public void pressSignButton(View view) {
         String s = (String) ((Button) view).getText();
         String num = (String) this.number.getText();
         if (num.charAt(0) == '0') {
-
         } else if (num.charAt(0) == '-') {
             String paste = "";
             for (int i = 0; i < (num.length()) - 1; i++) {
@@ -85,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             this.number.setText("-" + num);
         }
     }
-
     public void pressRemoveButton(View view) {
         String s = (String) ((Button) view).getText();
         if (s.equals("C")) {
@@ -102,22 +86,17 @@ public class MainActivity extends AppCompatActivity {
             this.number.setText(paste);
         }
     }
-
     public void pressColButton(View view) {
-
         String sNum2 = (String) this.number.getText();
         String text = (String) this.progress.getText();
-        if(text.equals("")==false)
-        {
+        if(text.equals("")==false){
             BigDecimal num2 = new BigDecimal(sNum2);
             String[] a = text.split(" ");
             BigDecimal num = new BigDecimal(a[0]);
             operate(a[1],num,num2);
         }
     }
-
-    public void operate(String col, BigDecimal num, BigDecimal num2)
-    {
+    public void operate(String col, BigDecimal num, BigDecimal num2) {
         String result="";
         BigDecimal chkPoint;
         if (col.equals("+")) {
@@ -130,27 +109,28 @@ public class MainActivity extends AppCompatActivity {
             System.out.println(result);
         } else if (col.equals("*")) {
             result = checkBigDecimal(num.multiply(num2));
-        } else if (col.equals("/")) {
-            result = checkBigDecimal(num.divide(num2));
+        } else if (col.equals("/")){
+            if(num2.intValue()!=0){
+                result = checkBigDecimal(num.divide(num2));
+            }
+            else{
+                result="0으로 나눌 수 없습니다.";
+            }
         }
         this.number.setText(result);
         this.progress.setText("");
     }
-    public String checkBigDecimal(BigDecimal chkPoint)
-    {
+    public String checkBigDecimal(BigDecimal chkPoint){
         String result;
         int convInt;
         double convDouble;
         convInt = chkPoint.intValue();
         convDouble = chkPoint.doubleValue();
-        if(convInt==convDouble)
-        {
+        if(convInt==convDouble) {
             result = Integer.toString(convInt);
-        }else
-        {
+        }else {
             result = Double.toString(convDouble);
         }
         return  result;
     }
-
 }
