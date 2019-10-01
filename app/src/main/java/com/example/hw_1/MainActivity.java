@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void pressNumButton(View view) {
         String s = (String) ((Button) view).getText();
-        if (this.number.getText().equals("0")) {
+        if (this.number.getText().equals("0")||this.number.getText().equals(divideErrorMsg)) {
             this.number.setText(s);
         } else {
             this.number.setText(this.number.getText() + s);
