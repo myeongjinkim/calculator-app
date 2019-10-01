@@ -12,9 +12,12 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Queue;
+
+
 public class MainActivity extends AppCompatActivity {
     private TextView number;
     private TextView progress;
+    public String divideErrorMsg = "0으로 나눌 수 없습니다.";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 result = checkBigDecimal(num.divide(num2));
             }
             else{
-                result="0으로 나눌 수 없습니다.";
+                result=divideErrorMsg;
             }
         }
         this.number.setText(result);
